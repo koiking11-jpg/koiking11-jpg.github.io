@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>マイセカイ家具リアクション図鑑</title>
+<style>
+:root{--bg:#faf9fc;--paper:#fff;--ink:#30313b;--sub:#8b8c99;--lav:#aaa5df;--lav2:#f2f0ff;--pink:#e8abc1;--pink2:#fff1f6;--line:#ece9f0}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",sans-serif}button{font:inherit;color:inherit;cursor:pointer}
+.header{background:linear-gradient(180deg,#fff8fb,#faf9fc);border-bottom:1px solid var(--line);padding:20px 16px 17px}.wrap{max-width:760px;margin:auto}.brand{display:flex;align-items:center;gap:11px}.logo{width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg,#f0b8ce,#c6c1ed);display:grid;place-items:center;color:#fff;font-size:20px}.brand h1{font-size:18px;margin:0}.sub{font-size:10px;color:var(--sub);margin-top:3px;letter-spacing:.07em}
+main{padding:18px 16px 36px}.eyebrow{font-size:11px;color:var(--sub);margin:2px 2px 8px}.page-title{font-size:21px;margin:0 0 5px}.lead{font-size:12px;color:var(--sub);line-height:1.7;margin:0 0 18px}
+.card{background:#fff;border:1px solid var(--line);border-radius:20px;box-shadow:0 7px 25px #4a415e09}.home{padding:18px;margin-bottom:12px}.home h2{font-size:15px;margin:0 0 5px}.home p{font-size:11px;color:var(--sub);margin:0 0 13px}.big{width:100%;display:flex;align-items:center;justify-content:space-between;text-align:left;border:1px solid var(--line);background:#fff;border-radius:15px;padding:13px 14px;margin-top:8px}.big .left{display:flex;gap:10px;align-items:center}.icon{width:34px;height:34px;border-radius:11px;background:var(--lav2);display:grid;place-items:center;color:#706aa8}.pink .icon{background:var(--pink2);color:#ad6680}.arrow{color:#aaa;font-size:20px}.series{padding:16px;margin:9px 0}.series h3{font-size:14px;margin:0 0 4px}.series p{font-size:10px;color:var(--sub);margin:0}
+.back{border:0;background:transparent;color:#777;padding:0 0 12px;font-size:11px}.toolbar{padding:14px;margin-bottom:12px}.label{font-size:11px;color:var(--sub);margin:0 0 8px}.chips{display:flex;gap:7px;flex-wrap:wrap}.chip{border:1px solid var(--line);background:#fff;border-radius:12px;padding:9px 11px;font-size:11px}.chip.active{background:var(--lav2);border-color:#ddd9f5;color:#6d68a4;font-weight:700}.subbox{margin-top:13px;padding-top:13px;border-top:1px solid var(--line)}
+.stats{display:flex;gap:8px;margin:12px 0}.stat{flex:1;text-align:center;padding:10px 6px;background:#fff;border:1px solid var(--line);border-radius:14px}.stat b{display:block;font-size:15px}.stat span{font-size:9px;color:var(--sub)}
+.list{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden}.item{padding:14px 15px;border-bottom:1px solid var(--line)}.item:last-child{border:0}.top{display:flex;justify-content:space-between;gap:10px}.name{font-size:13px;font-weight:700}.type{font-size:9px;color:#8d8898;background:#f7f5f8;border-radius:7px;padding:5px 7px;white-space:nowrap}.summary{font-size:10px;color:#777985;margin-top:6px}.checks{display:flex;gap:7px;margin-top:10px}.check{display:flex;align-items:center;gap:5px;font-size:10px;color:#666775;background:#fbfafc;border:1px solid var(--line);border-radius:9px;padding:7px 9px}.check input{accent-color:#8e89d4}.empty{text-align:center;padding:35px;color:var(--sub);font-size:12px}
+.modal{position:fixed;inset:0;background:#28253259;display:none;align-items:flex-end;z-index:10}.modal.show{display:flex}.sheet{width:min(760px,100%);background:#fff;border-radius:22px 22px 0 0;padding:18px;max-height:82vh;overflow:auto}.close{float:right;border:0;background:#f4f3f6;border-radius:50%;width:32px;height:32px;font-size:18px;color:#777}.sheet h3{margin:5px 42px 3px 0;font-size:18px}.sheet .seriesText{font-size:10px;color:var(--sub)}.rx{margin-top:18px}.rx h4{font-size:12px;margin:0 0 9px}.people{display:flex;flex-wrap:wrap;gap:7px}.person{background:var(--lav2);color:#66609e;border-radius:9px;padding:7px 9px;font-size:10px}.pair{background:var(--pink2);color:#a4627b;border-radius:9px;padding:7px 9px;font-size:10px}
+</style>
+</head>
+<body>
+<header class="header"><div class="wrap brand"><div class="logo">✦</div><div><h1>マイセカイ家具リアクション図鑑</h1><div class="sub">MY SEKAI FURNITURE GUIDE</div></div></div></header>
+<div id="app"></div>
+<div class="modal" id="modal"><div class="sheet"><button class="close" onclick="closeModal()">×</button><h3 id="modalName"></h3><div class="seriesText">きらめく流星ルームシリーズ</div><div class="rx"><h4>リアクション</h4><div class="people" id="modalPeople"></div></div></div></div>
+
+<script>
+const furniture=[
+["きらめく流星の家","家","",[]],
+["きらめく流星の壁紙","壁","",[]],
+["きらめく流星の床","床","",[]],
+["きらめく流星の窓","一般","その他",[]],
+["きらめく流星のチェスト","一般","棚",["星乃一歌","天馬咲希","望月穂波","日野森志歩","初音ミク","巡音ルカ"]],
+["きらめく流星のベッド","一般","ベッド",["星乃一歌","天馬咲希","望月穂波","日野森志歩","初音ミク","巡音ルカ"]],
+["きらめく流星のテーブル","一般","テーブル",["星乃一歌","天馬咲希","望月穂波","日野森志歩","初音ミク","巡音ルカ"]],
+["きらめく流星のチェア","一般","チェア",[]],
+["きらめく流星のシェルフ","一般","棚",[]],
+["きらめく流星のソファ","一般","その他",["一歌＆咲希","一歌＆穂波","一歌＆志歩","一歌＆ルカ","一歌＆ミク","咲希＆穂波","咲希＆志歩","咲希＆ルカ","咲希＆ミク","穂波＆志歩","穂波＆ルカ","穂波＆ミク","志歩＆ルカ","志歩＆ミク","ミク＆ルカ"]],
+["きらめく流星のローテーブル","一般","テーブル",[]],
+["きらめく流星のラグ","ラグ","",["星乃一歌","天馬咲希","望月穂波","日野森志歩","初音ミク","巡音ルカ"]],
+["きらめく流星の本棚","一般","棚",[]],
+["きらめく流星の壁掛け時計","壁掛け","",[]],
+["きらめく流星のテーブルライト","一般","家電",[]]
+];
+const cats={"すべて":[],"一般":["すべて","ベッド","テーブル","チェア","棚","観葉植物","家電","その他"],"小物":["すべて","家電","その他"],"大型":[],"壁掛け":[],"ディスプレイ":[],"ぬいぐるみ":[],"キャンバス":[],"ブロック":["すべて","四角","三角","丸"],"壁":[],"床":[],"ラグ":[],"家":[],"道":[],"カラータイル":[],"柵":[]};
+const chars=["星乃一歌","天馬咲希","望月穂波","日野森志歩","花里みのり","桐谷遥","桃井愛莉","日野森雫","小豆沢こはね","白石杏","東雲彰人","青柳冬弥","天馬司","鳳えむ","草薙寧々","神代類","宵崎奏","朝比奈まふゆ","東雲絵名","暁山瑞希","初音ミク","鏡音リン","鏡音レン","巡音ルカ","MEIKO","KAITO"];
+let state=JSON.parse(localStorage.getItem("mysekai_checks")||"{}");
+let selected="すべて",subSelected="すべて",charFilter=null;
+
+function home(){
+document.getElementById("app").innerHTML=`
+<main class="wrap">
+<div class="eyebrow">HOME</div><h2 class="page-title">マイセカイ家具図鑑</h2><p class="lead">家具のシリーズやキャラクターから、リアクションを確認できる図鑑。</p>
+<section class="card home"><h2>家具から探す</h2><p>マイセカイと同じカテゴリから家具をたどって探せるよ。</p>
+<button class="big" onclick="seriesPage()"><div class="left"><span class="icon">⌂</span><div><b>シリーズから探す</b><br><small style="color:#999">シリーズ → カテゴリ → 家具</small></div></div><span class="arrow">›</span></button></section>
+<section class="card home pink"><h2>キャラクターから探す</h2><p>キャラクターを選ぶと、そのキャラクターがリアクションする家具を見られるよ。</p><div class="chips" id="characters"></div></section>
+<section class="card home"><h2>確認状況から探す</h2><p>チェックした家具をまとめて確認できるよ。</p><div class="chips"><button class="chip" onclick="statusPage('owned')">所持済み</button><button class="chip" onclick="statusPage('unchecked')">リアクション未確認</button></div></section>
+<div class="eyebrow" style="margin-top:22px">SERIES</div>
+<button class="card series" style="width:100%;text-align:left" onclick="seriesPage()"><span class="arrow" style="float:right">›</span><h3>きらめく流星ルームシリーズ</h3><p>15家具</p></button>
+</main>`;
+document.querySelectorAll("#characters .chip").forEach((b,i)=>b.onclick=()=>seriesPage(chars[i]));
+}
+function seriesPage(cf=null){
+charFilter=cf;selected="すべて";subSelected="すべて";
+document.getElementById("app").innerHTML=`
+<main class="wrap"><button class="back" onclick="home()">‹ ホームに戻る</button>
+<div class="eyebrow">SERIES</div><h2 class="page-title">きらめく流星ルームシリーズ</h2><p class="lead">カテゴリを選んで家具を探そう。</p>
+<section class="card toolbar"><div class="label">大分類</div><div class="chips" id="cats"></div><div class="subbox" id="subbox" style="display:none"></div></section>
+<div class="stats"><div class="stat"><b id="shown">15</b><span>表示家具</span></div><div class="stat"><b id="owned">0</b><span>所持</span></div><div class="stat"><b id="checked">0</b><span>リアクション確認</span></div></div>
+<section class="list" id="list"></section></main>`;
+renderCats();renderList();
+}
+function renderCats(){
+const el=document.getElementById("cats");el.innerHTML="";
+Object.keys(cats).forEach(c=>{const b=document.createElement("button");b.className="chip"+(c===selected?" active":"");b.textContent=c;b.onclick=()=>{selected=c;subSelected="すべて";renderCats();renderList()};el.appendChild(b)});
+const box=document.getElementById("subbox"),kids=cats[selected];
+if(!kids.length){box.style.display="none";return}
+box.style.display="block";box.innerHTML='<div class="label">'+selected+' の分類</div><div class="chips" id="subs"></div>';
+kids.forEach(s=>{const b=document.createElement("button");b.className="chip"+(s===subSelected?" active":"");b.textContent=s;b.onclick=()=>{subSelected=s;renderCats();renderList()};document.getElementById("subs").appendChild(b)});
+}
+function matchChar(rx,c){
+if(!c)return true;
+const short={"星乃一歌":"一歌","天馬咲希":"咲希","望月穂波":"穂波","日野森志歩":"志歩","初音ミク":"ミク","巡音ルカ":"ルカ"}[c]||c;
+return rx.some(x=>x===c||x.includes(short));
+}
+function filtered(){
+return furniture.filter(f=>{
+const cat=selected==="すべて"||f[1]===selected;
+const sub=selected==="すべて"||!cats[selected].length||subSelected==="すべて"||f[2]===subSelected;
+return cat&&sub&&matchChar(f[3],charFilter);
+});
+}
+function renderList(){
+const arr=filtered(),list=document.getElementById("list");list.innerHTML="";
+document.getElementById("shown").textContent=arr.length;
+let o=0,c=0;furniture.forEach(f=>{if(state[f[0]]?.owned)o++;if(state[f[0]]?.checked)c++});
+document.getElementById("owned").textContent=o;document.getElementById("checked").textContent=c;
+if(charFilter){const h=document.createElement("div");h.style.cssText="padding:12px 15px;border-bottom:1px solid var(--line);font-size:11px;color:#777";h.textContent="キャラクター： "+charFilter;list.appendChild(h)}
+if(!arr.length){list.innerHTML+='<div class="empty">この条件の家具はまだないよ</div>';return}
+arr.forEach(f=>{
+const s=state[f[0]]||{},row=document.createElement("div");row.className="item";
+const summary=f[3].length?"リアクション："+(f[3].length>5?f[3].slice(0,5).join("・")+" …":f[3].join("・")):"リアクションなし";
+row.innerHTML='<div class="top"><div class="name">'+f[0]+'</div><div class="type">'+f[1]+(f[2]?" › "+f[2]:"")+'</div></div><div class="summary">'+summary+'</div><div class="checks"><label class="check" onclick="event.stopPropagation()"><input type="checkbox" '+(s.owned?"checked":"")+'> 所持</label><label class="check" onclick="event.stopPropagation()"><input type="checkbox" '+(s.checked?"checked":"")+'> リアクション確認済み</label></div>';
+row.onclick=()=>openModal(f);
+const inputs=row.querySelectorAll("input");inputs[0].onchange=()=>save(f[0],"owned",inputs[0].checked);inputs[1].onchange=()=>save(f[0],"checked",inputs[1].checked);list.appendChild(row);
+});
+}
+function save(n,k,v){state[n]=state[n]||{};state[n][k]=v;localStorage.setItem("mysekai_checks",JSON.stringify(state));renderList()}
+function statusPage(mode){seriesPage();setTimeout(()=>{selected="すべて";renderCats();let arr=furniture.filter(f=>mode==="owned"?state[f[0]]?.owned:!state[f[0]]?.checked);document.getElementById("list").innerHTML=arr.map(f=>`<div class="item" onclick='openModal(${JSON.stringify(f)})'><div class="top"><div class="name">${f[0]}</div><div class="type">${f[1]}${f[2]?" › "+f[2]:""}</div></div><div class="summary">${f[3].length?"リアクションあり":"リアクションなし"}</div></div>`).join("")||'<div class="empty">該当する家具はないよ</div>';document.getElementById("shown").textContent=arr.length},0)}
+function openModal(f){document.getElementById("modalName").textContent=f[0];const p=document.getElementById("modalPeople");p.innerHTML="";if(!f[3].length)p.innerHTML='<span style="font-size:11px;color:#999">リアクションなし</span>';else f[3].forEach(x=>{const s=document.createElement("span");s.className=x.includes("＆")?"pair":"person";s.textContent=x;p.appendChild(s)});document.getElementById("modal").classList.add("show")}
+function closeModal(){document.getElementById("modal").classList.remove("show")}
+document.getElementById("modal").onclick=e=>{if(e.target.id==="modal")closeModal()};
+home();
+</script>
+</body>
+</html>

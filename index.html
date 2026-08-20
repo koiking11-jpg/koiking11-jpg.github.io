@@ -643,7 +643,12 @@ function renderAll(){renderChars();renderCharDetail();renderSeries();renderSerie
 document.getElementById("seriesSearch")?.addEventListener("input",renderSeries);
 document.getElementById("listSearch")?.addEventListener("input",renderFurnitureList);
 
-renderAll();
+window.chooseListMain = chooseListMain;
+window.chooseListSub = chooseListSub;
+window.chooseOwnedFilter = chooseOwnedFilter;
+window.setState = setState;
+  
+  renderAll();
 </script>
 </body>
 </html>

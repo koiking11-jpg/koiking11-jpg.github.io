@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>マイセカイ家具図鑑</title>
+<style>
+:root{
+  --pink:#df78a7; --ink:#303042; --muted:#9d9aaa; --line:#e8e3eb;
+  --bg:#fffafd; --white:#fff;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif}
+body{padding-bottom:88px}
+header{
+  text-align:center;padding:38px 18px 30px;background:#fff;
+  border-bottom:1px solid #eee7ee;
+}
+.header-deco{color:#e7a2c1;letter-spacing:26px;font-size:18px}
+h1{font-size:32px;margin:12px 0 6px;font-weight:800;letter-spacing:.03em}
+.subtitle{font-size:15px;color:#aaa5b0;letter-spacing:.16em}
+main{max-width:760px;margin:auto;padding:24px 18px}
+.eyebrow{font-size:14px;color:#a8a3b0;letter-spacing:.12em;font-weight:700}
+h2{font-size:30px;margin:10px 0 14px}
+.lead{color:#9894a1;font-size:17px;line-height:1.8;margin:0 0 24px}
+.card{
+  background:rgba(255,255,255,.92);border:1px solid var(--line);
+  border-radius:28px;padding:24px;margin:18px 0;
+  box-shadow:0 5px 20px rgba(130,110,140,.06)
+}
+.card h3{font-size:23px;margin:0 0 8px}
+.card p{color:#9a96a3;line-height:1.7;margin:0 0 18px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.action{
+  border:1px solid var(--line);border-radius:22px;padding:18px;
+  background:linear-gradient(135deg,#fff1f7,#fff);
+  text-align:left;font:inherit;color:var(--ink);cursor:pointer
+}
+.action:nth-child(2){background:linear-gradient(135deg,#effbf8,#fff)}
+.action:nth-child(3){background:linear-gradient(135deg,#f1f7ff,#fff)}
+.action strong{display:block;font-size:19px;color:#2487df;margin-bottom:10px}
+.action span{color:#9a96a3;font-size:14px;line-height:1.5}
+.back{border:0;background:none;color:#6491ce;font-weight:700;font-size:16px;padding:4px 0 18px;cursor:pointer}
+.filters{display:flex;flex-wrap:wrap;gap:9px;margin:14px 0 18px}
+.filter{
+  border:1px solid #ddd7e2;background:#fff;border-radius:999px;
+  padding:9px 15px;color:#817d89;cursor:pointer;font:inherit
+}
+.filter.active{background:#f4e9fb;border-color:#d7b9ec;color:#805ca5;font-weight:700}
+.subfilters{padding:14px;background:#fff8fb;border-radius:20px;border:1px solid #eee4eb;margin:12px 0 18px}
+.item{
+  display:flex;align-items:center;justify-content:space-between;gap:14px;
+  background:#fff;border:1px solid var(--line);border-radius:20px;
+  padding:16px 17px;margin:10px 0;cursor:pointer
+}
+.item .name{font-weight:700;font-size:16px}
+.item .meta{color:#aaa5b0;font-size:13px;margin-top:5px}
+.status{
+  flex:0 0 auto;border:1px solid #d9d3dc;background:#fff;border-radius:14px;
+  padding:9px 12px;color:#aaa;font-weight:700
+}
+.status.owned{background:#eaf8f3;border-color:#b9e3d4;color:#43a88c}
+.status.checked{background:#eef5ff;border-color:#c8dbf4;color:#5d8fd2}
+.team-title{
+  border-radius:18px;padding:12px 18px;margin:28px 0 12px;
+  font-size:22px;font-weight:800;border:1px solid
+}
+.team-title.leo{background:#f0f1fb;border-color:#c9c5ec}
+.team-title.mmj{background:#f2fae9;border-color:#d0e6a5}
+.team-title.vbs{background:#fdeef4;border-color:#f0b6cd}
+.team-title.wxs{background:#fff4e3;border-color:#efc992}
+.char-grid{display:flex;flex-wrap:wrap;gap:12px}
+.char{
+  border-radius:18px;padding:13px 22px;min-width:104px;
+  background:#fff;border:2px solid var(--c);font-size:18px;
+  color:#303042;cursor:pointer;box-shadow:0 3px 10px rgba(80,70,90,.04)
+}
+.char.selected{box-shadow:0 0 0 3px rgba(80,70,90,.08) inset,0 4px 14px rgba(80,70,90,.10)}
+.notice{font-size:13px;color:#aaa5b0;margin-top:8px}
+.bottom{
+ position:fixed;left:0;right:0;bottom:0;height:78px;background:rgba(255,255,255,.96);
+ border-top:1px solid #eee8ee;display:grid;grid-template-columns:repeat(5,1fr);
+ z-index:10;padding-bottom:env(safe-area-inset-bottom)
+}
+.nav{
+ border:0;background:none;color:#aaa6b0;font:inherit;font-size:14px;cursor:pointer;
+ display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px
+}
+.nav .icon{font-size:21px;line-height:1}
+.nav.active{color:var(--pink);font-weight:800}
+.summary{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.stat{border:1px solid var(--line);border-radius:18px;padding:14px;text-align:center;background:#fff}
+.stat small{display:block;color:#9d98a5}.stat b{font-size:26px;display:block;margin-top:5px}
+.empty{padding:30px;text-align:center;color:#aaa}
+@media(max-width:520px){
+ h1{font-size:28px} h2{font-size:28px}.grid2{grid-template-columns:1fr 1fr}
+ .action{min-height:150px}.char{min-width:calc(25% - 9px);padding:12px 8px}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="header-deco">✦ ♡ ✦</div>
+  <h1>マイセカイ家具図鑑</h1>
+  <div class="subtitle">MY SEKAI FURNITURE GUIDE</div>
+</header>
+
+<main id="app"></main>
+
+<nav class="bottom">
+  <button class="nav active" data-page="home"><span class="icon">⌂</span><span>HOME</span></button>
+  <button class="nav" data-page="series"><span class="icon">♕</span><span>シリーズ</span></button>
+  <button class="nav" data-page="characters"><span class="icon">●</span><span>キャラクター</span></button>
+  <button class="nav" data-page="status"><span class="icon">▣</span><span>確認状況</span></button>
+  <button class="nav" data-page="list"><span class="icon">☷</span><span>一覧</span></button>
+</nav>
+
+<script>
+const characters = {
+ "Leo/need":[
+  ["一歌","#33AAEE"],["咲希","#FFDD44"],["穂波","#FF6666"],["志歩","#BBDD22"],["ミク","#99EEDD"],["ルカ","#FFBBCC"]
+ ],
+ "MORE MORE JUMP！":[
+  ["みのり","#FFCCAA"],["遥","#99CCFF"],["愛莉","#FFAACC"],["雫","#99EEDD"],["ミク","#99EEDD"],["リン","#FFDD44"]
+ ],
+ "Vivid BAD SQUAD":[
+  ["こはね","#FF6699"],["杏","#00BBDD"],["彰人","#FF7722"],["冬弥","#0077DD"],["ミク","#99EEDD"],["レン","#FFDD44"],["MEIKO","#FF9999"]
+ ],
+ "ワンダーランズ×ショウタイム":[
+  ["司","#FFBB00"],["えむ","#FF66BB"],["寧々","#33DD99"],["類","#BB88EE"],["ミク","#99EEDD"],["KAITO","#3366CC"]
+ ],
+ "25時、ナイトコードで。":[
+  ["奏","#BB6688"],["まふゆ","#8888CC"],["絵名","#CCAA88"],["瑞希","#DDAACC"],["ミク","#99EEDD"]
+ ]
+};
+
+const categoryTree = {
+ "一般":["家電","テーブル","椅子","収納","その他"],
+ "小物":["家電","その他"],
+ "ラグ":[],
+ "壁":[],
+ "床":[],
+ "壁掛け":[]
+};
+
+const furniture = [
+ ["クリーンパウダールームシリーズ","シリーズ","シリーズ"],
+ ["クリーンパウダールームの壁紙","壁","壁"],
+ ["クリーンパウダールームの床","床","床"],
+ ["洗面台","一般","その他"],
+ ["洗濯機","一般","家電"],
+ ["足ふきマット","ラグ","ラグ"],
+ ["ハンディ掃除機","一般","家電"],
+ ["歯ブラシとコップ","小物","その他"],
+ ["ドライヤー","小物","家電"],
+ ["クリーンパウダールームの窓","壁掛け","壁掛け"]
+];
+
+let state = JSON.parse(localStorage.getItem("sekaiGuideState")||"{}");
+state.owned ||= {}; state.checked ||= {};
+let currentPage="home", mainCat="すべて", subCat="すべて", charFilter="すべて";
+
+function save(){localStorage.setItem("sekaiGuideState",JSON.stringify(state))}
+function setPage(p){currentPage=p; render()}
+function esc(s){return s.replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}
+
+function home(){
+ return `<div class="eyebrow">HOME</div><h2>マイセカイ家具図鑑</h2>
+ <p class="lead">家具のシリーズやキャラクターから、リアクションと所持状況を確認できる図鑑。</p>
+ <section class="card"><h3>家具から探す</h3><p>シリーズやカテゴリ、一覧から家具を探せるよ。</p>
+  <div class="grid2">
+   <button class="action" onclick="setPage('series')"><strong>シリーズから探す</strong><span>シリーズ → 家具</span></button>
+   <button class="action" onclick="setPage('list')"><strong>カテゴリから探す</strong><span>大分類 → 細分類 → 家具</span></button>
+   <button class="action" onclick="setPage('list')"><strong>家具一覧</strong><span>すべての家具を一覧で見る</span></button>
+  </div>
+ </section>
+ <section class="card"><h3>キャラクターから探す</h3><p>キャラクターを選ぶと、そのキャラクターがリアクションする家具を見られるよ。</p>
+  <button class="action" style="width:100%" onclick="setPage('characters')"><strong>キャラクターから探す</strong><span>1人・複数人のリアクションをチェック</span></button>
+ </section>
+ <section class="card"><h3>確認状況から探す</h3><p>チェックした家具をまとめて確認できるよ。</p>
+  <button class="action" style="width:100%;background:linear-gradient(135deg,#effbf8,#fff)" onclick="setPage('status')"><strong>確認状況から探す</strong><span>所持・リアクション確認の状況</span></button>
+ </section>
+ <section class="card"><h3>確認状況サマリー</h3><p>チェック状態はこの端末のブラウザに保存されるよ。</p>${summary()}</section>`;
+}
+function summary(){
+ const total=furniture.length, owned=Object.values(state.owned).filter(Boolean).length, checked=Object.values(state.checked).filter(Boolean).length;
+ return `<div class="summary"><div class="stat"><small>所持済み</small><b>${owned}</b></div><div class="stat"><small>未所持</small><b>${Math.max(0,total-owned)}</b></div><div class="stat"><small>リアクション確認</small><b>${checked}</b></div></div>`;
+}
+function listPage(){
+ const cats=["すべて",...Object.keys(categoryTree)];
+ let filtered=furniture.filter(x=>mainCat==="すべて"||x[1]===mainCat);
+ if(mainCat!=="すべて" && subCat!=="すべて") filtered=filtered.filter(x=>x[2]===subCat);
+ return `<button class="back" onclick="setPage('home')">← HOME</button><h2>家具から探す</h2>
+ <p class="lead">大分類を選んで、さらに細かい分類から絞り込めるよ。</p>
+ <div class="filters">${cats.map(c=>`<button class="filter ${mainCat===c?'active':''}" onclick="chooseMain('${c}')">${c}</button>`).join("")}</div>
+ ${mainCat!=="すべて"?`<div class="subfilters"><b>${mainCat}の細分類</b><div class="filters">
+   <button class="filter ${subCat==="すべて"?'active':''}" onclick="chooseSub('すべて')">すべて</button>
+   ${(categoryTree[mainCat]||[]).map(c=>`<button class="filter ${subCat===c?'active':''}" onclick="chooseSub('${c}')">${c}</button>`).join("")}
+ </div></div>`:""}
+ ${filtered.map(itemRow).join("") || '<div class="empty">該当する家具はまだないよ。</div>'}`;
+}
+function itemRow(x){
+ const owned=!!state.owned[x[0]], checked=!!state.checked[x[0]];
+ return `<div class="item"><div onclick="toggle('owned','${esc(x[0])}')"><div class="name">${esc(x[0])}</div><div class="meta">${esc(x[1])}${x[2]!==x[1]?' → '+esc(x[2]):''}</div></div>
+ <div><button class="status ${owned?'owned':''}" onclick="toggle('owned','${esc(x[0])}')">${owned?'所持済み':'未所持'}</button>
+ <button class="status ${checked?'checked':''}" onclick="toggle('checked','${esc(x[0])}')">${checked?'確認済み':'未確認'}</button></div></div>`;
+}
+function chooseMain(c){mainCat=c;subCat="すべて";render()}
+function chooseSub(c){subCat=c;render()}
+function toggle(type,name){state[type][name]=!state[type][name];save();render()}
+function seriesPage(){
+ return `<button class="back" onclick="setPage('home')">← HOME</button><h2>シリーズから探す</h2>
+ <p class="lead">シリーズに分類されている家具を確認できるよ。</p>
+ ${furniture.filter(x=>x[1]==="シリーズ").map(itemRow).join("")}`;
+}
+function charactersPage(){
+ let html=`<button class="back" onclick="setPage('home')">← HOME</button><h2>キャラクターから探す</h2><p class="lead">キャラクターを選ぶと、そのキャラクターがリアクションする家具を見られるよ。</p>`;
+ for(const [team,arr] of Object.entries(characters)){
+  html+=`<div class="team-title ${team.startsWith("Leo")?'leo':team.startsWith("MORE")?'mmj':team.startsWith("Vivid")?'vbs':'wxs'}">${team}</div><div class="char-grid">`;
+  for(const [name,color] of arr) html+=`<button class="char" style="--c:${color}" onclick="setPage('status')">${name}</button>`;
+  html+=`</div>`;
+ }
+ return html;
+}
+function statusPage(){
+ const owned=furniture.filter(x=>state.owned[x[0]]), checked=furniture.filter(x=>state.checked[x[0]]);
+ return `<button class="back" onclick="setPage('home')">← HOME</button><h2>確認状況</h2><p class="lead">家具の所持状況やリアクション確認状況をチェックできるよ。</p>
+ ${summary()}<section class="card"><h3>所持済み</h3>${owned.length?owned.map(itemRow).join(""):'<div class="empty">まだ所持済みの家具はないよ。</div>'}</section>
+ <section class="card"><h3>リアクション確認済み</h3>${checked.length?checked.map(itemRow).join(""):'<div class="empty">まだ確認済みの家具はないよ。</div>'}</section>`;
+}
+function render(){
+ const app=document.getElementById("app");
+ app.innerHTML=currentPage==="home"?home():currentPage==="list"?listPage():currentPage==="series"?seriesPage():currentPage==="characters"?charactersPage():statusPage();
+ document.querySelectorAll(".nav").forEach(b=>b.classList.toggle("active",b.dataset.page===currentPage));
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+document.querySelectorAll(".nav").forEach(b=>b.addEventListener("click",()=>setPage(b.dataset.page)));
+render();
+</script>
+</body>
+</html>
